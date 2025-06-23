@@ -3,12 +3,12 @@ import React, { useState } from "react";
 function App() {
   const [name, setName] = useState("");
   const [greeting, setGreeting] = useState("");
-  const [error, setError] = useState(false);
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setGreeting("");
-    setError(false);
+    setError("");
 
     try {
       const response = await fetch("https://efarmogi-backend.onrender.com/kalimera", {
@@ -20,14 +20,15 @@ function App() {
       });
 
       if (!response.ok) {
-        throw new Error("Σφάλμα απόκρισης");
+        const text = await response.text();
+        throw new Error(`Σφάλμα απόκρισης: ${text}`);
       }
 
       const data = await response.json();
       setGreeting(data.message);
     } catch (err) {
-      console.error("Σφάλμα:", err);
-      setError(true);
+      console.error("Σφάλμα κατά την υποβολή:", err);
+      setError("Σφάλμα κατά την επικοινωνία με τον διακομιστή.");
     }
   };
 
@@ -45,16 +46,13 @@ function App() {
       </form>
 
       {greeting && <h2>{greeting}</h2>}
-      {error && (
-        <h2 style={{ color: "red" }}>
-          Σφάλμα κατά την επικοινωνία με τον διακομιστή.
-        </h2>
-      )}
+      {error && <h2 style={{ color: "red" }}>{error}</h2>}
     </div>
   );
 }
 
 export default App;
+
 
 
 
