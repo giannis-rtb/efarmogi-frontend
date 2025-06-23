@@ -11,7 +11,7 @@ function App() {
     setError("");
 
     try {
-      const response = await fetch("https://efarmogi-backend.onrender.com/kalimera", {
+      const response = await fetch("https://efarmogi-backend-2.onrender.com/greet", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -41,6 +41,7 @@ function App() {
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="π.χ. Μαρία"
+          required
         />
         <button type="submit">Υποβολή</button>
       </form>
@@ -52,6 +53,7 @@ function App() {
 }
 
 export default App;
+
 
 
 
